@@ -21,7 +21,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y build-essential libffi-dev libssl-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev openjdk-17-jdk
-        pip install --upgrade "cython<3.0.0" buildozer p4a
+        pip install --upgrade "cython<3.0.0" buildozer
 
     - name: Generate buildozer spec & Build APK
       run: |
