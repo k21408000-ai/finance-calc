@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -23,14 +23,16 @@ jobs:
         sudo apt install -y build-essential libffi-dev libssl-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev openjdk-17-jdk
         pip install --upgrade "cython<3.0.0" buildozer
 
-    - name: Accept Android Licenses & Build APK
+    - name: Auto-Accept Android SDK Licenses & Build
       run: |
-        buildozer init
+        if [ ! -f buildozer.spec ]; then
+          buildozer init
+        fi
+        mkdir -p ~/.android
+        touch ~/.android/repositories.cfg
         yes | buildozer -v android debug
-      env:
-        ACCEPT_BUILD_TOOLS_CHECKSUMS: "true"
 
-    - name: Upload APK
+    - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-release
